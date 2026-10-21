@@ -26,12 +26,16 @@ complains about text. They are a threshold for his critique, not a predictor of 
   101-150 12%, over 150 6%.
 - **Almost every deck is a reading deck:** 69 reading, 8 mixed, 1 presented (definitions below).
   Mixed decks have a median of 33 words (p75 40); the single presented deck, 28.
-- **Where the reviewer complains about too much text:** those 20 decks have a median of 70 (p25
-  53); the other 58 decks, 48 (p75 67). The p75 of slides in uncriticized decks is 81: a quarter
-  of their slides carry more than 80 words.
+- **Where the reviewer complains about too much text:** he says slides carry too much text in 10
+  of the 78 decks (Five Flute, Wilco, Arkive, Enduring Planet, Qortex, NOQX, Dutch, Hour One,
+  Diamond Standard, Cloudsmith); their deck median is 74 (p25 68). The other 68 decks sit at 49
+  (p75 69). Counting any remark about wordy or overloaded slides, 19 decks at 72.5 against 59 at
+  47.5. A quarter of all slides carry more than 86 words, so long slides are common outside the
+  decks he flags too.
 - **Clarity weighs more than volume:** clarity critiques in 57 of 98 decks (82 items); too much
-  text in 19 decks (20 items), or 24 decks counting any mention. The commonest other critiques:
-  use of funds (34 items), go-to-market (24), the ask (21), business model (20), product (20).
+  text in 11 decks, or 24 counting any remark about wordy or overloaded slides. The commonest
+  other critiques: use of funds (34 items), go-to-market (24), the ask (21), business model (20),
+  product (20).
 - **Claim titles are a minority:** the script tags 38% of titles as claims (444 of 1,170), but
   that is a ceiling, since it also tags slogans. Corrected by the manual check (5 of 8 right),
   about 24% (444 × 0.62 / 1,170; small sample, wide interval). Labels 49%, no title 13%. Only 22
@@ -48,10 +52,10 @@ complains about text. They are a threshold for his critique, not a predictor of 
 These are thresholds for the reviewer's critique of text, not for raising.
 
 1. **Reading deck, sent before the call:** median at most 50 words per content slide, and a
-   reason for every slide over 80. Basis: the reviewer complains about text in decks with a
-   median of 70; the 58 decks he does not criticize sit at 48 and the whole corpus at 51. 80 is
-   about the p75 of slides in those uncriticized decks (81), so one slide in four of theirs runs
-   longer: 80 flags a slide to check, it is not a cap.
+   reason for every slide over 80. Basis: the 10 decks where the reviewer complains about text
+   have a median of 74; the 68 he does not flag sit at 49 and the whole corpus at 51. 80 sits just
+   under the p75 of all slides (86), so about one slide in four runs longer: 80 flags a slide to
+   check, it is not a cap.
 2. **Presented deck, with a speaker:** at most 30 words per slide. The weakest line of the ruler:
    the mixed decks have a median of 33 and the one presented deck 28, because the corpus has
    almost none of this kind.
@@ -85,7 +89,9 @@ These are thresholds for the reviewer's critique of text, not for raising.
 - **Has a number:** ignores acronyms (B2B, 3D, 5G, Web3, 24/7, Q1-Q4) and a bare year.
 - **Critiques:** one line per point the reviewer praises or criticizes (mostly his "three things
   to love" and "three things that could be improved"), tagged too-much-text, clarity, traction,
-  team, design, market or other.
+  team, design, market or other. The too-much-text split was recounted on 2026-10-21 by reading
+  every article: a deck counts when he says a slide carries too much text, too many words or
+  dense text; "any remark" adds wordy, overloaded or too-much-information slides.
 - **Raised again:** a later equity round or an acquisition with a public source. Debt financings
   and a team joining another company do not count.
 
