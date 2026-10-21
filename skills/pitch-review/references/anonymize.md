@@ -29,12 +29,14 @@ JOÃO SILVA => INÊS DUARTE
 
 How the swaps apply:
 
-- **Whole words only.** "Jane" is swapped, "Janeiro" is not; "Raj" is swapped, "Rajasthan" is not. Accented names work, since the text is read as UTF-8.
+- **Whole words only.** "Jane" is swapped, "Janeiro" is not; "Raj" is swapped, "Rajasthan" is not. Accented names work, since the text is read as UTF-8. The other side of this: a compound that glues the name to a letter, digit or underscore (`acme_pay`, `AcmeLabs`, `acmepay2`) isn't swapped by the `acmepay` or `Acme Pay` line and needs a line of its own. You don't have to find them by hand: the leak check below matches inside words and lists every one.
 - **Longest first, in one pass,** so line order doesn't matter: "Jane Doe" is swapped before "Jane" could split it, and a fake name is never swapped again.
 - **Exact case.** Write one line per case variant you use. The leak check ignores case, so a variant you forgot shows up there.
 - **Literal text.** Dots and slashes need no escaping. An entity is matched as written in the HTML, so `Acme&nbsp;Pay` needs its own line.
 
-`forbidden.txt`, one term per line: everything that identifies the project, matched later as a whole word in any case ("JOÃO" matches "João"). List the bare words, so one line catches every variant. No empty line: the command stops on one, because an empty pattern matches everything.
+`forbidden.txt`, one term per line: everything that identifies the project, matched later anywhere in the text, inside words too, in any case ("JOÃO" matches "João"; `acme` matches `acme_pay`, `@acme_pay`, `AcmeLabs` and `acmepay2`). List the bare words, so one line catches every variant. No empty line: the command stops on one, because an empty pattern matches everything.
+
+A line starting with `!` allows an ordinary word that happens to contain a term: `!Janeiro` when `Jane` is forbidden, `!does` when `Doe` is. Allowed words are blanked before the check, so list only real words that are not about the project, never a spelling of the name.
 
 ```
 Acme
@@ -45,6 +47,8 @@ Raj
 Patel
 João
 Silva
+!Janeiro
+!Rajasthan
 ```
 
 What belongs in both files, on Solana in particular: the company and product names, each founder's first and last name, previous employers named on the team slide, the domain and every email, the X, GitHub, Discord and Telegram handles, program IDs and mint addresses (each in full), explorer, Dune and DefiLlama URLs that carry your slug, and the operating-system user name if it is a founder's name. Swap a program ID for a placeholder such as `PROGRAM_ID`, not for another real address.
@@ -57,7 +61,7 @@ A term in `forbidden.txt` with no swap in `swaps.txt` makes the leak check fire.
 bash /path/to/pitch-review/references/anonymize.sh reading deck.html swaps.txt forbidden.txt /tmp/review-r1
 ```
 
-- **Mode**: `reading` drops HTML comments, every `<img>` and the speaker notes. `stage` keeps the notes and writes them as numbered lines to `notes.txt`, line N for page N. `paired` keeps the `<img>` for the paired comparison ([paired-set.md](paired-set.md)); only images embedded in the file render, since a relative path doesn't resolve from the work folder. `script` is for a spoken script: swaps only, written as `script.md`.
+- **Mode**: `reading` drops HTML comments, every `<img>` and the speaker notes. `stage` keeps the notes and writes them to `notes.txt`, one line per slide labelled `N:`, so line N is page N; a slide without notes gets an empty `N:` line. `paired` keeps the `<img>` for the paired comparison ([paired-set.md](paired-set.md)); only images embedded in the file render, since a relative path doesn't resolve from the work folder. `script` is for a spoken script: swaps only, written as `script.md`.
 - **Readers' folder**: a new folder for every run, outside your home folder and outside the project, such as `/tmp/review-r1`. The reader sees this path. A path under your home carries your user name (the command warns), and one built from the project folder carries the project's. A folder that already holds files is refused, because it would mix versions.
 - **Chrome**: found in the usual macOS and Linux places; otherwise set `CHROME=/path/to/binary`. Running as root (a container, CI), Chrome won't start without `--no-sandbox`: set `CHROME_FLAGS=--no-sandbox`, and only for a deck you built yourself. `--no-pdf-header-footer` keeps the browser's print footer, which carries the file URL, off the pages; older Chrome builds call it `--print-to-pdf-no-header` ([Chrome for Developers, Headless command line](https://developer.chrome.com/docs/automation-and-testing/headless-cli), read 2026-10-08).
 
@@ -65,7 +69,7 @@ What it does, in order: checks both files (a malformed swap line or an empty for
 
 Pass: the last line is `clean` (exit 0). The other endings: `LEAK` (exit 1) after the file, line and term of each hit; `NO PDF` (exit 2) when Chrome wrote no PDF or an empty one; `ERROR` (exit 2) on a setup problem. On a leak, add the missing swap and run again into a new folder; don't patch the output by hand.
 
-The check is a whole-word match, so a forbidden word that also occurs in ordinary text ("Pay", "Bridge") flags every use. Keep such words out of `forbidden.txt` and list the compound ("Acme Pay") instead. `pdftotext` can split a letter-spaced label into single letters; the HTML check still sees it whole.
+The check matches inside words, so it errs toward a false alarm: a short term flags every word that contains it ("Doe" in "does", "Raj" in "Rajasthan"). Add a `!word` line for each such word. A forbidden word that is itself ordinary text ("Pay", "Bridge") flags every use; keep it out of `forbidden.txt` and list the compound ("Acme Pay") instead. `pdftotext` can split a letter-spaced label into single letters; the HTML check still sees it whole.
 
 ## 3. Look at every page
 

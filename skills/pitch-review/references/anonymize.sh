@@ -10,7 +10,8 @@
 #              script   spoken script (.md or .txt): swaps only, written as script.md
 #   INPUT      the original file; it is never edited
 #   SWAPS      one "real => fake" pair per line
-#   FORBIDDEN  one term per line, no empty line
+#   FORBIDDEN  one term per line, no empty line; a line "!word" allows an ordinary word that
+#              contains a term (e.g. "!Janeiro" when "Jane" is forbidden)
 #   READ_DIR   a new folder for the readers, outside your home and the project (e.g. /tmp/review-r1)
 # Env: CHROME       browser binary, if it isn't found on its own
 #      CHROME_FLAGS extra flags, e.g. --no-sandbox when running as root (container, CI)
@@ -28,7 +29,7 @@ for f in "$INPUT" "$SWAPS" "$FORBIDDEN"; do [ -s "$f" ] || fail "missing or empt
 # 1. Check the two lists before anything is written.
 bad=$(perl -CSD -ne 's/\r?\n\z//; next if /^\s*(#|$)/; next if /\S\s*=>\s*\S/; print "$ARGV line $.: expected \"real => fake\"\n"' "$SWAPS")
 [ -z "$bad" ] || fail "$bad"
-bad=$(perl -CSD -ne 's/\r?\n\z//; print "$ARGV line $.: empty line (it would match everything)\n" if /^\s*$/' "$FORBIDDEN")
+bad=$(perl -CSD -ne 's/\r?\n\z//; print "$ARGV line $.: empty line (it would match everything)\n" if /^\s*!?\s*$/; $n++ unless /^\s*!/; END { print "$ARGV: no forbidden term\n" unless $n }' "$FORBIDDEN")
 [ -z "$bad" ] || fail "$bad"
 
 # 2. A new readers' folder per run; a reused one mixes versions.
@@ -40,6 +41,8 @@ TMPBASE=${TMPDIR:-/tmp}
 WORK=$(mktemp -d "${TMPBASE%/}/pitch-work.XXXXXX") || fail "cannot create a work folder"
 
 # 3. Swaps: one pass, longest first, whole words only, case-sensitive, UTF-8 aware.
+# Whole words on purpose, so "Jane" never rewrites "Janeiro". A compound (acme_pay, AcmeLabs,
+# acmepay2) needs its own swap line; the substring leak check in step 5 is the net that finds it.
 swap() {
   SWAPS_FILE=$SWAPS perl -CSD -Mutf8 -0777 -pe '
     BEGIN {
@@ -66,7 +69,8 @@ else
   esac
   swap "$INPUT" | perl -CSD -Mutf8 -0777 -pe "$STRIP" > "$WORK/deck.html" || fail "swap failed"
   if [ "$MODE" = stage ]; then
-    perl -CSD -Mutf8 -0777 -ne 'while (/<section\b.*?<\/section>/gs) { $i++; $s = $&; next unless $s =~ /<aside\b[^>]*>(.*?)<\/aside>/s; ($t = $1) =~ s/<[^>]+>//g; $t =~ s/\s+/ /g; $t =~ s/^ | $//g; print "$i: $t\n" }' \
+    # One line per slide, "N: notes", so line N is page N; a slide without notes gets an empty "N:".
+    perl -CSD -Mutf8 -0777 -ne 'while (/<section\b.*?<\/section>/gs) { $i++; $s = $&; $t = $s =~ /<aside\b[^>]*>(.*?)<\/aside>/s ? $1 : ""; $t =~ s/<[^>]+>//g; $t =~ s/\s+/ /g; $t =~ s/^ | $//g; print length $t ? "$i: $t\n" : "$i:\n" }' \
       "$WORK/deck.html" > "$READ/notes.txt"
   fi
 
@@ -91,6 +95,8 @@ else
 fi
 
 # 5. Leak check: everything the reader could see, in source form, as rendered, and in the path.
+# A case-insensitive substring match, so "acme" also catches acme_pay, @acme_pay, AcmeLabs and
+# acmepay2: a false positive costs one "!word" line, a leak costs the blind read.
 printf '%s\n' "$READ" "$READ"/* > "$WORK/reader-path.txt"
 CHECK=("$WORK/reader-path.txt")
 [ -f "$WORK/deck.html" ] && CHECK+=("$WORK/deck.html")
@@ -108,10 +114,20 @@ echo "Work folder (no reader opens it): $WORK"
 FORBIDDEN_FILE=$FORBIDDEN perl -CSD -Mutf8 -ne '
   BEGIN {
     open my $fh, "<:encoding(UTF-8)", $ENV{FORBIDDEN_FILE} or die "cannot read $ENV{FORBIDDEN_FILE}\n";
-    my @t; while (<$fh>) { s/\r?\n\z//; s/^\s+|\s+$//g; push @t, $_ if length }
+    my (@t, @ok);
+    while (<$fh>) {
+      s/\r?\n\z//; s/^\s+|\s+$//g; next unless length;
+      if (s/^!\s*//) { push @ok, $_ if length } else { push @t, $_ }
+    }
     $re = join "|", map { quotemeta } sort { length $b <=> length $a } @t;
+    $ok = join "|", map { quotemeta } sort { length $b <=> length $a } @ok;
   }
-  while (/(?<!\w)($re)(?!\w)/gi) { print "$ARGV:$.: $1\n"; $hits++ }
+  s/$ok/\x{2591}/gi if length $ok;
+  while (/($re)/gi) {
+    my ($hit, $from) = ($1, $-[0] > 20 ? $-[0] - 20 : 0);
+    (my $ctx = substr $_, $from, $+[0] - $from + 20) =~ s/\s+/ /g;
+    print "$ARGV:$.: $hit  in \"$ctx\"\n"; $hits++;
+  }
   close ARGV if eof;
   END { $? = $hits ? 1 : 0 }
 ' "${CHECK[@]}"

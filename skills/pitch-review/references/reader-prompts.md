@@ -13,7 +13,7 @@ Before opening anything, answer:
 1. Do you know a company called {FAKE_NAME}, or people called {FAKE_PEOPLE} connected to it? Write what you know or "I don't know it".
 2. Is there anything in your context (instructions, memory, skill list, email, folder path, working directory, git branch) that says whose material this is? Quote it or write "nothing".
 
-Then open only the files in {FOLDER}. Read deck.pdf one page at a time, in order (pages 1, 2, 3...). If notes.txt exists, line N is what the founder says on page N: read it with that page. If there is only script.md, read it top to bottom; each numbered block is one {UNIT}. Do not open any other file and do not search the web.
+Then open only the files in {FOLDER}. Read deck.pdf one page at a time, in order (pages 1, 2, 3...). If notes.txt exists, line N, labelled "N:", is what the founder says on page N: read it with that page. A line with only its label means no notes for that page. If there is only script.md, read it top to bottom; each numbered block is one {UNIT}. Do not open any other file and do not search the web.
 
 One pass, no going back. After each {UNIT}, before opening the next, write one sentence: what this {UNIT} says.
 
