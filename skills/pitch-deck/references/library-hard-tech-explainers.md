@@ -32,7 +32,7 @@ deep-tech deck was found.
    and radar, ENHANCED by Luminar" [6]. Sateliot: "To connect all NB-IOT devices from space under
    5G standard" [15, TC].
 5. **Before and after in a unit a layperson feels.** Joby slide 14: "~100x Quieter Than a
-   Helicopter" and a fare of $95 against $393; slide 16: "5x faster than driving in major metros"
+   Helicopter" and an operating cost of $95 against $393 for a 25-mile helicopter trip; slide 16: "5x faster than driving in major metros"
    [8]. Aurora slide 26: "Moving a load from LA to Houston drops from 2+ days to a single day" [7].
 6. **Jargon in the detail, the title in plain words.** Michael Seibel: "eliminate jargon,
    acronyms, marketing speak, and any ambiguous terms such as "platform"", and "You need to be

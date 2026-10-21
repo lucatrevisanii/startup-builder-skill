@@ -36,7 +36,7 @@ author's.
   believable". If you make a large transition, "be very clear about it and explain why". Slides
   "should be reentrant", so a listener who looks up from a phone can "pick up the thread".
 - **Geoff Ralston, YC demo day** ([guide](https://www.ycombinator.com/blog/guide-to-demo-day-pitches/),
-  2016): "begin your story as narrowly as you can and then expand"; "Don't bury the lead"; listeners
+  2016): "begin your story as narrowly as you can and then expand"; "Don't bury the lead" (Justin Kan, as Ralston quotes him); listeners
   keep "3 or 4 key points", so close by listing them; build the story first and the slides after,
   or the talk "will stutter from slide to slide".
 - **Kevin Hale, YC** ([How to Pitch Your Startup](https://www.ycombinator.com/library/6q-how-to-pitch-your-startup),
@@ -82,7 +82,7 @@ author's.
 | Deck | Order | The bridge from wedge to vision | The close |
 |---|---|---|---|
 | Tesla, "Secret Master Plan", 2006, an essay ([archived](https://web.archive.org/web/2016/https://www.tesla.com/blog/secret-tesla-motors-master-plan-just-between-you-and-me)) | vision first; raises its own objection ("Are we really in need of another high performance sports car?") and answers it | "enter at the high end of the market ... and then drive down market as fast as possible" | the plan restated in five lines |
-| LinkedIn Series B, 2004 ([archived](https://web.archive.org/web/2024/https://www.reidhoffman.org/linkedin-pitch-to-greylock/)) | vision first; opens on revenue, the objection of the day | "a great recruiting business with an option for more" (Hoffman, in hindsight) | a three-point summary, then slide 1 repeated |
+| LinkedIn Series B, 2004 ([archived](https://web.archive.org/web/2024/https://www.reidhoffman.org/linkedin-pitch-to-greylock/)) | vision first; opens on revenue, the objection of the day | "a great recruiting business with an option for more" (Greylock's thesis, as Hoffman tells it) | a three-point summary, then slide 1 repeated |
 | UberCab, Dec 2008, pre-launch ([archived PDF](https://web.archive.org/web/2020/http://garrettcamp.com/files/UberCab_Dec2008.pdf)) | wedge first ("Focus on SF/NYC to begin") | "Extend infrastructure to other LBS applications"; worst case stated: "Remains a 10 car, 100 client service in SF" | progress to date and next steps |
 | Coinbase seed, Aug 2012 ([PDF, third-party host](https://media.genppt.com/pitch-decks/coinbase/coinbase-pitch-deck-2012.pdf)) | wedge first | "Coinbase: A Hosted Bitcoin Wallet", then traction, then "Coinbase: A New Payment Network" | slide 1's title repeated: it closes on the wedge |
 | Joby Aviation, SPAC, Feb 2021 ([SEC](https://www.sec.gov/Archives/edgar/data/1819848/000119312521053631/d135823dex992.htm)) | wedge first, mission last | "Pre-service revenues from government contracts de-risk commercialization" | the mission on the last slide |
@@ -121,7 +121,7 @@ No study found measures arc, slide order or a callback in a seed deck. What exis
 mixed:
 
 - Villanueva 2012, PhD thesis, field experiment with 188 active angels: storytelling's effects
-  "operate in opposite directions, effectively cancelling each other out" ([abstract, archived](https://web.archive.org/web/2024/https://conservancy.umn.edu/handle/11299/144342)).
+  "operate in opposite directions, effectively cancelling each other out" ([abstract, archived](https://web.archive.org/web/2016/https://conservancy.umn.edu/handle/11299/144342)).
 - Hsu, Chan, Yang & Motro 2025, conference abstract (226 angels, then 98 randomized): narrative
   raised investment "for entrepreneurial angels but not for non-entrepreneurial angels"
   ([abstract](https://api.openalex.org/works/doi:10.5465/amproc.2025.14743abstract)).
@@ -163,7 +163,8 @@ crowdfunding, and without causality.
 8. **Self-standing slides** ("reentrant", Harris 2014) versus one continuous line (Harris 2019,
    Parker and Stone, Hoffman).
 9. **Length:** 20 to 25 slides (Hoffman) versus 10 to 14 plus an appendix (Currier) versus about
-   10 sets of at most 3 slides (Harris).
+   10 sets of at most 3 slides (Harris). [SKILL.md](../SKILL.md) sets 10 to 12 for a VC deck, and
+   the workflow wins ([library.md](library.md)).
 
 Limits: Minto's book was not opened; Parker and Stone come from an unofficial upload with
 auto-captions; three of the seven decks are late-stage SPAC decks; the Coinbase deck is a
