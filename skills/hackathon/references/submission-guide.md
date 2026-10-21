@@ -2,6 +2,8 @@
 
 # Submission guide
 
+As of 2026-10-21, [colosseum.com/hackathon](https://colosseum.com/hackathon) shows the Crypto World's Fair (14 Sep – 12 Oct 2026) with judging underway, so check the page for the next edition's dates. Its FAQ says the hackathons are open to builders on every chain, with dedicated prize tracks for several ecosystems.
+
 ## What Colosseum's portal asks for
 
 Per the [hackathon FAQ](https://colosseum.com/hackathon), read 2026-10-05:
