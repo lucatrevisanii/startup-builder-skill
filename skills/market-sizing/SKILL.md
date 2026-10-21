@@ -9,7 +9,8 @@ user-invocable: true
 Rank where to enter → count the units it covers → price them → check against a named
 top-down figure → write `.claude/context/market.md`. Output is one bottom-up number you can
 defend factor by factor and a ranked list of entry wedges. Asked for both flows, run wedges
-first, then size the top two or three.
+first, then size the top two or three, plus `idea.md`'s wedge if it isn't among them: the
+slide is sized on that one.
 
 What investors and filed decks ask of a market slide: [method-sources.md](references/method-sources.md).
 Traps: [traps.md](references/traps.md). Read it before adding anything up.
